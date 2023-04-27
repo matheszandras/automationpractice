@@ -9,8 +9,9 @@ public class Hooks {
 
     public static WebDriver webDriver;
 
+
     @Before
-    public void setUp() {
+    public static void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();

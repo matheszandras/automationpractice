@@ -27,5 +27,7 @@ Feature: Register and delete new user account
     And The user fills name and email address fields
     And The user clicks on Signup button
     And The user fills the registration form
+   # And The user click on Create Account button
+
 
 

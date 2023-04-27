@@ -11,22 +11,30 @@ public class RegisterUserStepDefs {
 
     @When("^The user clicks on the Signup/Login button$")
     public void userClicksRegister() {
-        userClicksRegister();
+        registerUserObjects.userClicksRegister();
     }
 
     @And("^The user fills name and email address fields$")
     public void fillNameAndEmail() {
-        fillNameAndEmail();
+        registerUserObjects.fillNameAndEmail();
     }
 
     @And("^The user clicks on Signup button$")
     public void signup() {
-        signup();
+        registerUserObjects.signup();
         Assert.assertTrue("Registraion form is not visible", registerUserObjects.loginFormTitle.isDisplayed());
     }
-    @And("^The user fills the registration form$")
-    public void fillForm(){
 
+    @And("^The user fills the registration form$")
+    public void fillForm() {
+        registerUserObjects.fillForm();
     }
+
+    @And("^The user click on Create Account button$")
+    public void createAccount() {
+        registerUserObjects.createAccount();
+        Assert.assertEquals("account not created","Account created",registerUserObjects.accountCreated.getText());
+    }
+
 
 }
