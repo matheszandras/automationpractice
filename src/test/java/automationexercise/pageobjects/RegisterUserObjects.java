@@ -1,8 +1,14 @@
 package automationexercise.pageobjects;
 
+import automationexercise.hooks.Hooks;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+
+import java.time.Duration;
 
 public class RegisterUserObjects extends BasePageObjects {
 
@@ -10,20 +16,38 @@ public class RegisterUserObjects extends BasePageObjects {
         super();
     }
 
-    String username = RandomStringUtils.randomAlphabetic(7);
+    public String username = RandomStringUtils.randomAlphabetic(7);
     String email = RandomStringUtils.randomAlphanumeric(7) + "@test.com";
+    String password = RandomStringUtils.randomAlphanumeric(7);
+    String firstname = "Test";
+    String lastname = "User";
+    String company = "Lockheed Martin Corp.";
+    String address1 = "6801 Rockledge Drive";
+    String address2 = "---";
+    String state = "Maryland";
+    String city = "Bethesda";
+    String zipcode = "20817 ";
+    String mobileNumber = RandomStringUtils.randomNumeric(13);
+
+
+    Wait<WebDriver> fluentWait = new FluentWait<>(Hooks.getWebDriver())
+            .withTimeout(Duration.ofSeconds(30L))
+            .pollingEvery(Duration.ofSeconds(5L))
+            .ignoring(NoSuchElementException.class);
+
+    public void closeFormAd() {
+        fluentWait.until(ExpectedConditions.visibilityOf(closeAd));
+        WebElement closeButton = fluentWait.until(driver -> driver.findElement(By.id("aswift_2_host")));
+        closeButton.click();
+    }
 
     @FindBy(css = "div#slider-carousel")
     public WebElement carousel;
-    //   slider-carousel - visible
-
     @FindBy(css = "a[href='/login']")
     WebElement loginButton;
 
     @FindBy(css = "div[class='signup-form']")
     WebElement signUpTitle;
-    //div[class='signup-form'] - contains New User Signup!
-
     @FindBy(css = "input[data-qa='signup-name']")
     WebElement signUpName;
 
@@ -38,11 +62,8 @@ public class RegisterUserObjects extends BasePageObjects {
     //  -visiblex
 
     @FindBy(css = ".grippy-host")
-    WebElement closeFormAd;
-    /*
-    * .grippy-host
-    *
-    * */
+    public WebElement closeFormAd;
+
     @FindBy(css = "input[value='Mr']")
     WebElement loginFormUserTitle;
 
@@ -113,52 +134,44 @@ public class RegisterUserObjects extends BasePageObjects {
     public WebElement accountCreated;
 
     @FindBy(css = "a[data-qa='continue-button']")
-    WebElement continueRegistration;
+    public WebElement continueRegistration;
 
-    @FindBy(css = "div[aria-label='Close ad']")
+    @FindBy(css = "#header li:nth-child(10) b")
+    public WebElement loggedInUsername;
+
+    @FindBy(id = "aswift_2_host")
     WebElement closeAd;
+
+    @FindBy(className = "down")
+    WebElement closeAdDown;
 
     @FindBy(css = "a[href='/delete_account']")
     WebElement deleteAccount;
 
     @FindBy(css = "h2[data-qa=account-deleted]")
-    WebElement deletedAccountMessage;
+    public WebElement deletedAccountMessage;
+
+    @FindBy(id = "dismiss button")
+    public WebElement closeRegisteredUserAd;
 
     public void userClicksRegister() {
-        if (closeFormAd.isDisplayed()){
-            closeFormAd.click();
-            loginButton.click();
-        }
         loginButton.click();
     }
 
     public void fillNameAndEmail() {
-        if (closeFormAd.isDisplayed()){
-            closeFormAd.click();
-            signUpName.sendKeys(username);
-            signUpEmail.sendKeys(email);
-        }
         signUpName.sendKeys(username);
         signUpEmail.sendKeys(email);
     }
 
     public void signup() {
-        if (closeFormAd.isDisplayed()){
-            closeFormAd.click();
-            signUpButton.click();
-        }
         signUpButton.click();
     }
 
-    public void fillForm(){
-        if (closeFormAd.isDisplayed()){
-            closeFormAd.click();
-        }
-        /*WebDriverWait wait = new WebDriverWait(Hooks.getWebDriver(),10);
-        wait.until(ExpectedConditions.visibilityOf(closeFormAd));
-        closeFormAd.click();*/
+    public void fillForm() {
         loginFormUserTitle.click();
-        loginFormPassword.sendKeys();
+        loginFormPassword.sendKeys(password);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", loginFormYears);
         loginFormDays.click();
         loginFormSelectedDay.click();
         loginFormMonths.click();
@@ -167,22 +180,26 @@ public class RegisterUserObjects extends BasePageObjects {
         loginFormSelectedYear.click();
         loginFormNewsletter.click();
         loginFormOptSpecialOffers.click();
-        loginFormUserFirstName.sendKeys();
-        loginFormUserLastName.sendKeys();
-        loginFormCompany.sendKeys();
-        loginFormAddress1.sendKeys();
-        loginFormAddress2.sendKeys();
+        loginFormUserFirstName.sendKeys(firstname);
+        loginFormUserLastName.sendKeys(lastname);
+        loginFormCompany.sendKeys(company);
+        loginFormAddress1.sendKeys(address1);
+        loginFormAddress2.sendKeys(address2);
+        JavascriptExecutor js2 = (JavascriptExecutor) driver;
+        js2.executeScript("arguments[0].scrollIntoView();", loginFormMobileNumber);
         loginFormCountry.click();
         loginFormSelectedCountry.click();
-        loginFormState.sendKeys();
-        loginFormCity.sendKeys();
-        loginFormZipCode.sendKeys();
-        loginFormMobileNumber.sendKeys();
+        loginFormState.sendKeys(state);
+        loginFormCity.sendKeys(city);
+        loginFormZipCode.sendKeys(zipcode);
+        loginFormMobileNumber.sendKeys(mobileNumber);
     }
-    public void createAccount(){
+
+    public void createAccount() {
         loginFormCreateAccount.click();
     }
 
-
-
+    public void deleteAccount() {
+        deleteAccount.click();
+    }
 }
