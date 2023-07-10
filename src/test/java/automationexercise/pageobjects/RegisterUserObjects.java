@@ -29,7 +29,6 @@ public class RegisterUserObjects extends BasePageObjects {
     String zipcode = "20817 ";
     String mobileNumber = RandomStringUtils.randomNumeric(13);
 
-
     Wait<WebDriver> fluentWait = new FluentWait<>(Hooks.getWebDriver())
             .withTimeout(Duration.ofSeconds(30L))
             .pollingEvery(Duration.ofSeconds(5L))
@@ -59,7 +58,6 @@ public class RegisterUserObjects extends BasePageObjects {
 
     @FindBy(css = "div[class='login-form'] h2:first-child")
     public WebElement loginFormTitle;
-    //  -visiblex
 
     @FindBy(css = ".grippy-host")
     public WebElement closeFormAd;
@@ -151,7 +149,7 @@ public class RegisterUserObjects extends BasePageObjects {
     @FindBy(css = "h2[data-qa=account-deleted]")
     public WebElement deletedAccountMessage;
 
-    @FindBy(id = "dismiss button")
+    @FindBy(css = "#dismiss-button")
     public WebElement closeRegisteredUserAd;
 
     public void userClicksRegister() {
@@ -168,6 +166,9 @@ public class RegisterUserObjects extends BasePageObjects {
     }
 
     public void fillForm() {
+//Map<String, String> webelements
+
+        //  WebElement continueRegistration = driver.findElement(By.id());
         loginFormUserTitle.click();
         loginFormPassword.sendKeys(password);
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -191,6 +192,8 @@ public class RegisterUserObjects extends BasePageObjects {
         loginFormSelectedCountry.click();
         loginFormState.sendKeys(state);
         loginFormCity.sendKeys(city);
+
+
         loginFormZipCode.sendKeys(zipcode);
         loginFormMobileNumber.sendKeys(mobileNumber);
     }

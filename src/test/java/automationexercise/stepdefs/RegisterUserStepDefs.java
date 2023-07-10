@@ -6,7 +6,9 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchFrameException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterUserStepDefs {
 
@@ -30,26 +32,34 @@ public class RegisterUserStepDefs {
 
     @And("^The user fills the registration form$")
     public void fillForm() {
+        //Map<String, String> webelements
         registerUserObjects.fillForm();
     }
-
+//{string}{string}{string} String selector, String type, String value selector, type, value
     @And("^The user clicks on Create Account button$")
     public void createAccount() throws InterruptedException {
         registerUserObjects.createAccount();
-        Assert.assertEquals("account not created","ACCOUNT CREATED!",registerUserObjects.accountCreated.getText());
+        Assert.assertEquals("account not created", "ACCOUNT CREATED!", registerUserObjects.accountCreated.getText());
         registerUserObjects.continueRegistration.click();
-        JavascriptExecutor js = (JavascriptExecutor) Hooks.getWebDriver();
-        js.executeScript("document.addEventListener('click', click);");
+        try {
+            Hooks.webDriver.switchTo().frame("aswift_2");
+        } catch (NoSuchFrameException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Hooks.webDriver.switchTo().frame("ad_iframe");
+        } catch (NoSuchFrameException e) {
+            throw new RuntimeException(e);
+        }
+        WebDriverWait wait = new WebDriverWait(Hooks.getWebDriver(), 20);
+        wait.until(ExpectedConditions.elementToBeClickable(registerUserObjects.closeRegisteredUserAd));
         registerUserObjects.closeRegisteredUserAd.click();
-        Assert.assertEquals("User not logged in!",registerUserObjects.username,registerUserObjects.loggedInUsername.getText());
+        Assert.assertEquals("User not logged in!", registerUserObjects.username, registerUserObjects.loggedInUsername.getText());
     }
 
-    @Then("$")
-    public void deleteAccount (){
+    @Then("^The user clicks on the delete account button$")
+    public void deleteAccount() {
         registerUserObjects.deleteAccount();
-        Assert.assertEquals("Account was not deleted!","Your account has been permanently deleted!", registerUserObjects.deletedAccountMessage);
-
+        Assert.assertEquals("Account was not deleted!", "ACCOUNT DELETED!", registerUserObjects.deletedAccountMessage.getText());
     }
-
-
 }

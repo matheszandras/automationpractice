@@ -14,7 +14,7 @@ public class CommonStepDefs extends BasePageObjects {
     @Given("^The user is on the website$")
     public void openHomepage() {
         open();
-        WebDriverWait wait = new WebDriverWait(Hooks.getWebDriver(), 15);
+        WebDriverWait wait = new WebDriverWait(Hooks.getWebDriver(), 10);
         wait.until(ExpectedConditions.visibilityOf(registerUserObjects.carousel));
     }
 }
