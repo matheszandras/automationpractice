@@ -2,7 +2,10 @@ package automationexercise.pageobjects;
 
 import automationexercise.hooks.Hooks;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -18,16 +21,6 @@ public class RegisterUserObjects extends BasePageObjects {
 
     public String username = RandomStringUtils.randomAlphabetic(7);
     String email = RandomStringUtils.randomAlphanumeric(7) + "@test.com";
-    String password = RandomStringUtils.randomAlphanumeric(7);
-    String firstname = "Test";
-    String lastname = "User";
-    String company = "Lockheed Martin Corp.";
-    String address1 = "6801 Rockledge Drive";
-    String address2 = "---";
-    String state = "Maryland";
-    String city = "Bethesda";
-    String zipcode = "20817 ";
-    String mobileNumber = RandomStringUtils.randomNumeric(13);
 
     Wait<WebDriver> fluentWait = new FluentWait<>(Hooks.getWebDriver())
             .withTimeout(Duration.ofSeconds(30L))
@@ -49,81 +42,12 @@ public class RegisterUserObjects extends BasePageObjects {
     WebElement signUpTitle;
     @FindBy(css = "input[data-qa='signup-name']")
     WebElement signUpName;
-
     @FindBy(css = "input[data-qa='signup-email']")
     WebElement signUpEmail;
-
     @FindBy(css = "button[data-qa='signup-button']")
     WebElement signUpButton;
-
     @FindBy(css = "div[class='login-form'] h2:first-child")
     public WebElement loginFormTitle;
-
-    @FindBy(css = ".grippy-host")
-    public WebElement closeFormAd;
-
-    @FindBy(css = "input[value='Mr']")
-    WebElement loginFormUserTitle;
-
-    @FindBy(css = "input#password")
-    WebElement loginFormPassword;
-
-    @FindBy(css = "select#days")
-    WebElement loginFormDays;
-
-    @FindBy(css = "select#days option[value='11']")
-    WebElement loginFormSelectedDay;
-
-    @FindBy(css = "select#months")
-    WebElement loginFormMonths;
-
-    @FindBy(css = "select#months option[value='8']")
-    WebElement loginFormSelectedMonth;
-
-    @FindBy(css = "select#years")
-    WebElement loginFormYears;
-
-    @FindBy(css = "select#years option[value='1988']")
-    WebElement loginFormSelectedYear;
-
-    @FindBy(css = "input#newsletter")
-    WebElement loginFormNewsletter;
-
-    @FindBy(css = "input#optin")
-    WebElement loginFormOptSpecialOffers;
-
-    @FindBy(css = "input#first_name")
-    WebElement loginFormUserFirstName;
-
-    @FindBy(css = "input#last_name")
-    WebElement loginFormUserLastName;
-
-    @FindBy(css = "input#company")
-    WebElement loginFormCompany;
-
-    @FindBy(css = "input#address1")
-    WebElement loginFormAddress1;
-
-    @FindBy(css = "input#address2")
-    WebElement loginFormAddress2;
-
-    @FindBy(css = "select#country")
-    WebElement loginFormCountry;
-
-    @FindBy(css = "select#country option[value='New Zealand']")
-    WebElement loginFormSelectedCountry;
-
-    @FindBy(css = "input#state")
-    WebElement loginFormState;
-
-    @FindBy(css = "input#city")
-    WebElement loginFormCity;
-
-    @FindBy(css = "input#zipcode")
-    WebElement loginFormZipCode;
-
-    @FindBy(css = "input#mobile_number")
-    WebElement loginFormMobileNumber;
 
     @FindBy(css = "button[data-qa='create-account']")
     WebElement loginFormCreateAccount;
@@ -152,6 +76,7 @@ public class RegisterUserObjects extends BasePageObjects {
     @FindBy(css = "#dismiss-button")
     public WebElement closeRegisteredUserAd;
 
+
     public void userClicksRegister() {
         loginButton.click();
     }
@@ -165,9 +90,12 @@ public class RegisterUserObjects extends BasePageObjects {
         signUpButton.click();
     }
 
-    public void fillForm() {
+    /*public void fillForm(List(Map<String, String>) webElements, String value) {
 //Map<String, String> webelements
+         @FindBy (DataTable.TableConverter)
 
+        WebElement  elem;
+        WebElement teve = new WebElement(driver.findElement(By));
         //  WebElement continueRegistration = driver.findElement(By.id());
         loginFormUserTitle.click();
         loginFormPassword.sendKeys(password);
@@ -196,7 +124,7 @@ public class RegisterUserObjects extends BasePageObjects {
 
         loginFormZipCode.sendKeys(zipcode);
         loginFormMobileNumber.sendKeys(mobileNumber);
-    }
+    }*/
 
     public void createAccount() {
         loginFormCreateAccount.click();

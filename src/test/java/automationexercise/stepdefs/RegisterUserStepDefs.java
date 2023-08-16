@@ -2,6 +2,8 @@ package automationexercise.stepdefs;
 
 import automationexercise.hooks.Hooks;
 import automationexercise.pageobjects.RegisterUserObjects;
+import automationexercise.pageobjects.FormObjects;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,8 +12,11 @@ import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RegisterUserStepDefs {
+import java.util.List;
+import java.util.Map;
 
+public class RegisterUserStepDefs {
+    public FormObjects registrationFormObjects = new FormObjects();
     public RegisterUserObjects registerUserObjects = new RegisterUserObjects();
 
     @When("^The user clicks on the Signup/Login button$")
@@ -31,11 +36,29 @@ public class RegisterUserStepDefs {
     }
 
     @And("^The user fills the registration form$")
-    public void fillForm() {
-        //Map<String, String> webelements
-        registerUserObjects.fillForm();
+    public void fillForm(DataTable webElements) {
+
+        List<Map<String, String>> tableRows = webElements.asMaps(String.class, String.class);
+
+        for (Map<String, String> columns : tableRows) {
+            switch (columns.get("type")) {
+                case "input": {
+                    String selector = columns.get("selector");
+                    String value = columns.get("value");
+                    registrationFormObjects.fillInputField(selector, value);
+                }
+                case "checkbox": {
+                    String selector = columns.get("selector");
+                    registrationFormObjects.checkBox(selector);
+                }
+                case "select": {
+                    String selector = columns.get("selector");
+                    registrationFormObjects.selectDropdown(selector);
+                }
+            }
+        }
     }
-//{string}{string}{string} String selector, String type, String value selector, type, value
+
     @And("^The user clicks on Create Account button$")
     public void createAccount() throws InterruptedException {
         registerUserObjects.createAccount();
@@ -47,7 +70,7 @@ public class RegisterUserStepDefs {
             throw new RuntimeException(e);
         }
         try {
-            Hooks.webDriver.switchTo().frame("ad_iframe");
+            Hooks.webDriver.switchTo().frame("aswift_1");
         } catch (NoSuchFrameException e) {
             throw new RuntimeException(e);
         }

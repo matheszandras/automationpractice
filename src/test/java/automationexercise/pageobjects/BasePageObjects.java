@@ -18,5 +18,4 @@ public class BasePageObjects {
         driver.get(url);
         return this;
     }
-
 }
