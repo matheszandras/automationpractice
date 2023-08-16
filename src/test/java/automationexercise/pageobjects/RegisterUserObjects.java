@@ -90,42 +90,6 @@ public class RegisterUserObjects extends BasePageObjects {
         signUpButton.click();
     }
 
-    /*public void fillForm(List(Map<String, String>) webElements, String value) {
-//Map<String, String> webelements
-         @FindBy (DataTable.TableConverter)
-
-        WebElement  elem;
-        WebElement teve = new WebElement(driver.findElement(By));
-        //  WebElement continueRegistration = driver.findElement(By.id());
-        loginFormUserTitle.click();
-        loginFormPassword.sendKeys(password);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", loginFormYears);
-        loginFormDays.click();
-        loginFormSelectedDay.click();
-        loginFormMonths.click();
-        loginFormSelectedMonth.click();
-        loginFormYears.click();
-        loginFormSelectedYear.click();
-        loginFormNewsletter.click();
-        loginFormOptSpecialOffers.click();
-        loginFormUserFirstName.sendKeys(firstname);
-        loginFormUserLastName.sendKeys(lastname);
-        loginFormCompany.sendKeys(company);
-        loginFormAddress1.sendKeys(address1);
-        loginFormAddress2.sendKeys(address2);
-        JavascriptExecutor js2 = (JavascriptExecutor) driver;
-        js2.executeScript("arguments[0].scrollIntoView();", loginFormMobileNumber);
-        loginFormCountry.click();
-        loginFormSelectedCountry.click();
-        loginFormState.sendKeys(state);
-        loginFormCity.sendKeys(city);
-
-
-        loginFormZipCode.sendKeys(zipcode);
-        loginFormMobileNumber.sendKeys(mobileNumber);
-    }*/
-
     public void createAccount() {
         loginFormCreateAccount.click();
     }
