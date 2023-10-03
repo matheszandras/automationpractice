@@ -37,14 +37,6 @@ public class ContactUsStepDefs {
                     String value = columns.get("value");
                     formObjects.fillInputField(selector, value);
                 }
-                /*case "checkbox": {
-                    String selector = columns.get("selector");
-                    formObjects.checkBox(selector);
-                }
-                case "select": {
-                    String selector = columns.get("selector");
-                    formObjects.selectDropdown(selector);
-                }*/
             }
         }
     }
@@ -52,8 +44,8 @@ public class ContactUsStepDefs {
     @And("^The user uploads a file$")
     public void uploadFile() {
         contactUsObjects.uploadFile();
-        Assert.assertTrue("Success! Your details have been submitted successfully.",
-                contactUsObjects.successMessage.isDisplayed());
+        Assert.assertEquals("File upload wasn't successful","Success! Your details have been submitted successfully.",
+                contactUsObjects.successMessage.getText());
     }
 
     @Then("^The user returns to the Homepage")

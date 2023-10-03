@@ -1,16 +1,12 @@
 package automationexercise.stepdefs;
 
-import automationexercise.hooks.Hooks;
-import automationexercise.pageobjects.RegisterUserObjects;
 import automationexercise.pageobjects.FormObjects;
+import automationexercise.pageobjects.RegisterUserObjects;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.NoSuchFrameException;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Map;
@@ -41,42 +37,27 @@ public class RegisterUserStepDefs {
         List<Map<String, String>> tableRows = webElements.asMaps(String.class, String.class);
 
         for (Map<String, String> columns : tableRows) {
+            String selector = columns.get("selector");
+            String value = columns.get("value");
             switch (columns.get("type")) {
                 case "input": {
-                    String selector = columns.get("selector");
-                    String value = columns.get("value");
                     registrationFormObjects.fillInputField(selector, value);
                 }
                 case "checkbox": {
-                    String selector = columns.get("selector");
                     registrationFormObjects.checkBox(selector);
                 }
                 case "select": {
-                    String selector = columns.get("selector");
-                    registrationFormObjects.selectDropdown(selector);
+                    registrationFormObjects.selectDropdown(selector, value);
                 }
             }
         }
     }
 
     @And("^The user clicks on Create Account button$")
-    public void createAccount() throws InterruptedException {
+    public void createAccount() {
         registerUserObjects.createAccount();
         Assert.assertEquals("account not created", "ACCOUNT CREATED!", registerUserObjects.accountCreated.getText());
         registerUserObjects.continueRegistration.click();
-        try {
-            Hooks.webDriver.switchTo().frame("aswift_2");
-        } catch (NoSuchFrameException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Hooks.webDriver.switchTo().frame("aswift_1");
-        } catch (NoSuchFrameException e) {
-            throw new RuntimeException(e);
-        }
-        WebDriverWait wait = new WebDriverWait(Hooks.getWebDriver(), 20);
-        wait.until(ExpectedConditions.elementToBeClickable(registerUserObjects.closeRegisteredUserAd));
-        registerUserObjects.closeRegisteredUserAd.click();
         Assert.assertEquals("User not logged in!", registerUserObjects.username, registerUserObjects.loggedInUsername.getText());
     }
 

@@ -1,7 +1,9 @@
 package automationexercise.pageobjects;
 
 import automationexercise.hooks.Hooks;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 public class BasePageObjects {
@@ -16,6 +18,12 @@ public class BasePageObjects {
 
     public BasePageObjects open() {
         driver.get(url);
+        return this;
+    }
+
+    public BasePageObjects scrollIntoview(WebElement element) {
+        JavascriptExecutor js2 = (JavascriptExecutor) driver;
+        js2.executeScript("arguments[0].scrollIntoView();", element);
         return this;
     }
 }

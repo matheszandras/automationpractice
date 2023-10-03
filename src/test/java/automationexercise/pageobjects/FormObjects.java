@@ -2,8 +2,8 @@ package automationexercise.pageobjects;
 
 import automationexercise.hooks.Hooks;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class FormObjects extends BasePageObjects {
 
@@ -13,22 +13,20 @@ public class FormObjects extends BasePageObjects {
 
     public void fillInputField(String selector, String value) {
         WebElement inputField = Hooks.getWebDriver().findElement(new By.ByCssSelector(selector));
-        JavascriptExecutor js2 = (JavascriptExecutor) driver;
-        js2.executeScript("arguments[0].scrollIntoView();", inputField);
+        scrollIntoview(inputField);
         inputField.sendKeys(value);
     }
 
     public void checkBox(String selector) {
         WebElement checkBox = Hooks.getWebDriver().findElement(new By.ByCssSelector(selector));
-        JavascriptExecutor js2 = (JavascriptExecutor) driver;
-        js2.executeScript("arguments[0].scrollIntoView();", checkBox);
+        scrollIntoview(checkBox);
         checkBox.click();
     }
 
-    public void selectDropdown(String selector) {
-        WebElement dropdown = Hooks.getWebDriver().findElement(new By.ByCssSelector(selector));
-        JavascriptExecutor js2 = (JavascriptExecutor) driver;
-        js2.executeScript("arguments[0].scrollIntoView();", dropdown);
-        dropdown.click();
+    public void selectDropdown(String selector, String value) {
+        WebElement element = Hooks.getWebDriver().findElement(By.cssSelector(selector));
+        Select dropdown = new Select(element);
+        scrollIntoview(element);
+        dropdown.selectByValue(value);
     }
 }
