@@ -1,31 +1,29 @@
-#Test Case 1: Register User
-#1. Launch browser
-#2. Navigate to url 'http://automationexercise.com'
-#3. Verify that home page is visible successfully
-#4. Click on 'Signup / Login' button
-#5. Verify 'New User Signup!' is visible
-#6. Enter name and email address
-#7. Click 'Signup' button
-#8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
-#9. Fill details: Title, Name, Email, Password, Date of birth
-#10. Select checkbox 'Sign up for our newsletter!'
-#11. Select checkbox 'Receive special offers from our partners!'
-#12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
-#13. Click 'Create Account button'
-#14. Verify that 'ACCOUNT CREATED!' is visible
-#15. Click 'Continue' button
-#16. Verify that 'Logged in as username' is visible
-#17. Click 'Delete Account' button
-#18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
-
 Feature: Register and delete new user account
 
-  Scenario: Register user
+  Scenario: Register new user
 
     Given The user is on the website
     When The user clicks on the Signup/Login button
     And The user fills name and email address fields
     And The user clicks on Signup button
-    And The user fills the registration form
-
-
+    And The user fills the form
+      | type     | selector            | value                 |
+      | input    | input[value='Mr']   |                       |
+      | input    | input#password      | password              |
+      | select   | select#days         | 11                    |
+      | select   | select#months       | 8                     |
+      | select   | select#years        | 1988                  |
+      | checkbox | input#newsletter    |                       |
+      | checkbox | input#optin         |                       |
+      | input    | input#first_name    | Test                  |
+      | input    | input#last_name     | User                  |
+      | input    | input#company       | Lockheed Martin Corp. |
+      | input    | input#address1      | 6801 Rockledge Drive  |
+      | input    | input#address2      | ----                  |
+      | select   | select#country      | New Zealand           |
+      | input    | input#state         | Maryland              |
+      | input    | input#city          | Bethesda              |
+      | input    | input#zipcode       | 20817                 |
+      | input    | input#mobile_number | 0123456789            |
+    And The user clicks on Create Account button
+    Then The user clicks on the delete account button
